@@ -1,7 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
+import { View, Text, StyleSheet, FlatList, ScrollView, Dimensions } from "react-native";
 import Itemcard from "../../components/itemCard";
+
+const screenHeight = Dimensions.get('window').height;
+
 function Listng() {
   const [items, setItems] = useState();
 
@@ -22,7 +25,7 @@ function Listng() {
 
   return (
       <>
-      <ScrollView>
+      <ScrollView style={styles.listng}>
       {
 
 items?.map((item) => <Itemcard key={item.id} idata={item} />)
@@ -38,6 +41,8 @@ const styles = StyleSheet.create({
   listng: {
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "#fff",
+    height:screenHeight-50,
+    padding:10
+
   },
 });

@@ -13,9 +13,7 @@ export default function App() {
   return (
     <View style={styles.MainContainer}>
       <StatusBar hidden />
-      <Text style={styles.TabHeaderView}>
-        <Header />
-      </Text>
+      <Header />
       <Listing />
     </View>
   );
@@ -26,19 +24,5 @@ const styles = StyleSheet.create({
     display: "flex",
     position: "relative",
     width: "100%",
-    backgroundColor: "tomato",
-  },
-  TabHeaderView: {
-    height: 50,
-    backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-
-    elevation: 8,
   },
 });
