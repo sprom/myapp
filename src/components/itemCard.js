@@ -1,8 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Button, Pressable } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { useDispatch } from "react-redux";
 const elementWidth = "100%";
 
-function Item({ idata }) {
+function Item({ idata,action }) {
+  const dispatch = useDispatch();
+console.log(action);
   return (
     <View style={styles.itemcard}>
       {idata.thumb_img != null && (
@@ -14,10 +17,32 @@ function Item({ idata }) {
       <View style={styles.textes}>
         <Text style={styles.title}>{idata.name}</Text>
         <View style={styles.price}>
-          <Text >{idata.original_price} ლარი</Text>
-          <Pressable style={styles.addcart} onPress={() => alert("kl")}>
-            <Text style={styles.btntext}>კალათაში დამატება</Text>
-          </Pressable>
+          <Text>{idata.original_price} ლარი</Text>
+          {action == "add" ? (
+            <Pressable
+              style={styles.addcart}
+              onPress={() =>
+                dispatch({
+                  type: "SETCARTITEM",
+                  payload: idata,
+                })
+              }
+            >
+              <Text style={styles.btntext}>კალათაში დამატება</Text>
+            </Pressable>
+          ) : (
+            <Pressable
+              style={styles.remcart}
+              onPress={() =>
+                dispatch({
+                  type: "DELCARTITEM",
+                  payload: idata,
+                })
+              }
+            >
+              <Text style={styles.btntext}>კალათიდან წაშლა</Text>
+            </Pressable>
+          )}
         </View>
       </View>
     </View>
@@ -58,24 +83,34 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flex: 1,
     display: "flex",
-    flexDirection:'row',
+    flexDirection: "row",
     justifyContent: "space-between",
-    alignItems:'center'
+    alignItems: "center",
   },
   addcart: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 5,
-    paddingHorizontal:10,
+    paddingHorizontal: 10,
     borderRadius: 1,
-    backgroundColor: 'black',
-    borderRadius:4,
-    marginLeft:10,
+    backgroundColor: "green",
+    borderRadius: 4,
+    marginLeft: 10,
+  },
+  remcart: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 1,
+    backgroundColor: "red",
+    borderRadius: 4,
+    marginLeft: 10,
   },
   btntext: {
     fontSize: 12,
     lineHeight: 20,
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
   },
 });
