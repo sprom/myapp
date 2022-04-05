@@ -7,7 +7,6 @@ import Itemcard from "../../components/itemCard";
 const screenHeight = Dimensions.get("window").height;
 
 function Cart() {
-  const auth = useSelector((state) => state.auth);
   const cartitems = useSelector((state) => state.cartitems);
   return (
       <>

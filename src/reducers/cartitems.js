@@ -5,6 +5,17 @@ const initialState = {
 const cartItems = (state = initialState, action) => {
   switch (action.type) {
     case "SETCARTITEM":
+      const theItem = state.cartItems.find(
+        product => product.name === action.payload.name,
+      );
+      if (theItem) {
+        return {
+          ...state,
+          cartItems: [...state.cartItems],
+          totalPrice: state.totalPrice + action.payload.original_price,
+          
+        };
+      }
       return {
         ...state,
         cartItems: [...state.cartItems, action.payload],
@@ -18,8 +29,7 @@ const cartItems = (state = initialState, action) => {
         ),
         totalPrice: state.totalPrice - action.payload.original_price,
       };
-    // case CLEAR_CART:
-    //   return {...initialState};
+    
     default:
       return state;
   }

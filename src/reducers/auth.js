@@ -1,4 +1,4 @@
-const auth = (state = true, action) => {
+const auth = (state = false, action) => {
   switch (action.type) {
     case "SETAUTH":
         state = action.payload ;

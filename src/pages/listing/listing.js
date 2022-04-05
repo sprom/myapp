@@ -28,6 +28,7 @@ function Listng() {
     }
   }
 
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -38,7 +39,8 @@ function Listng() {
         {load ? (
           <ActivityIndicator size="small" color="#0000ff" />
         ) : (
-          items?.map((item,index) => <Itemcard key={index} idata={item} action='add' />)
+          items?.map((item,index) => 
+          <Itemcard key={index} idata={item} action='add' />)
         )}
       </ScrollView>
     </>

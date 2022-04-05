@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { useDispatch } from "react-redux";
 const elementWidth = "100%";
 
-function Item({ idata,action }) {
+function Item({ idata, action }) {
+  const [added, setAdded] = useState(false);
   const dispatch = useDispatch();
-console.log(action);
+  const HandlerAdd = () => {
+    dispatch({
+      type: "SETCARTITEM",
+      payload: idata,
+    });
+  };
+  const HandlerDelete = () => {
+    dispatch({
+      type: "DELCARTITEM",
+      payload: idata,
+    });
+  };
+
   return (
     <View style={styles.itemcard}>
       {idata.thumb_img != null && (
@@ -19,27 +32,17 @@ console.log(action);
         <View style={styles.price}>
           <Text>{idata.original_price} ლარი</Text>
           {action == "add" ? (
-            <Pressable
-              style={styles.addcart}
-              onPress={() =>
-                dispatch({
-                  type: "SETCARTITEM",
-                  payload: idata,
-                })
-              }
-            >
-              <Text style={styles.btntext}>კალათაში დამატება</Text>
-            </Pressable>
+            !added ? (
+              <Pressable style={styles.addcart} onPress={HandlerAdd}>
+                <Text style={styles.btntext}>კალათაში დამატება</Text>
+              </Pressable>
+            ) : (
+              <Pressable style={styles.addcart} onPress={HandlerAdd}>
+                <Text style={styles.btntext}> დამატებულია</Text>
+              </Pressable>
+            )
           ) : (
-            <Pressable
-              style={styles.remcart}
-              onPress={() =>
-                dispatch({
-                  type: "DELCARTITEM",
-                  payload: idata,
-                })
-              }
-            >
+            <Pressable style={styles.remcart} onPress={HandlerDelete}>
               <Text style={styles.btntext}>კალათიდან წაშლა</Text>
             </Pressable>
           )}
