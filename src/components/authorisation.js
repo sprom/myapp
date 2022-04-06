@@ -1,20 +1,24 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Text, StyleSheet, View, TextInput, Pressable, ActivityIndicator } from "react-native";
 import { useDispatch } from "react-redux";
+import axios from "axios";
+
 
 function Authorisation() {
+
+  const [userName, setUserName] = useState("");
+  const [pasword, setPasword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  // const [load, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+
   const dispatch = useDispatch();
 
-  const [userName, setUserName] = useState("Useless Text");
-  const [pasword, setPasword] = useState("Useless Text");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [load, setLoading] = useState(false);
-
   const handleLogin = async () => {
+    setDisabled(true);
     try {
-      setErrorMessage("");
-      setLoading(true);
+      setErrorMessage('');
+      // setLoading(true);
       const response = await axios.post(
         "https://cms.vendoo.ge/api/customer/login",
         {
@@ -23,11 +27,14 @@ function Authorisation() {
         }
       );
       dispatch({ type: "SETAUTH", payload: true });
-      setLoading(false);
+      // setLoading(false);
+      setDisabled(false);
     } catch (e) {
       setErrorMessage(e.response.data.message);
-      setLoading(false);
+      // setLoading(false);
+      setDisabled(false);
     }
+
 
   };
 
@@ -46,16 +53,19 @@ function Authorisation() {
       />
 
       <Pressable
-        style={styles.loginbtn}
+      disabled={disabled}
+        style={disabled?styles.disabled:styles.loginbtn}
         onPress={handleLogin}
       >
+        {disabled && <ActivityIndicator style={styles.lod} size="small" color="#fff" />}
+        
         <Text style={styles.btntext}>ავტორიზაცია</Text>
       </Pressable>
       <Text style={styles.er}>{errorMessage}</Text>
 
-      {load && (
+      {/* {load && (
           <ActivityIndicator size="small" color="#0000ff" />
-        ) }
+        ) } */}
     </View>
   );
 }
@@ -93,4 +103,19 @@ const styles = StyleSheet.create({
     marginTop: 20,
     textAlign:'center'
   },
+  disabled: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 1,
+    paddingHorizontal: 10,
+    borderRadius: 1,
+    backgroundColor: "grey",
+    borderRadius: 4,
+    height:40,
+    display:'flex',
+    flexDirection:'row'
+  },
+  lod:{
+    marginRight:5,
+  }
 });
