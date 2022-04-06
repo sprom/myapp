@@ -1,8 +1,8 @@
 import React from "react";
-import { Text, StyleSheet, View, Image } from "react-native";
+import { Text, StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import Cart from "../pages/cart/cart";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 function Header() {
   const auth = useSelector((state) => state.auth);
@@ -14,10 +14,21 @@ function Header() {
     <View style={styles.TabHeaderView}>
       <View style={styles.headcont}>
         <Image
-          source={require('../resources/logo.jpg')}
+          source={require("../resources/logo.jpg")}
           style={styles.imgelement}
         />
-        {auth && <Text onPress={()=>Navigation.navigate(Cart)} style={styles.carti}>კალათა <Text style={styles.count}>{cartitems.cartItems.length}</Text> </Text>}
+        {auth && (
+          <TouchableOpacity  onPress={() => Navigation.navigate(Cart)} style={styles.carti}>
+            <Image
+              source={require("../resources/cart.png")}
+              style={styles.cartimg}
+            />
+
+            <View>
+              <Text style={styles.count}>{cartitems.cartItems.length}</Text>
+            </View>
+          </TouchableOpacity >
+        )}
       </View>
     </View>
   );
@@ -48,17 +59,33 @@ const styles = StyleSheet.create({
   carti: {
     fontSize: 14,
     fontWeight: "bold",
+    display: "flex",
+    alignItems: "center",
+    flexDirection:'row',
+    paddingVertical:5,
+    paddingHorizontal:10
   },
   logo: {
     fontSize: 20,
     fontWeight: "bold",
   },
-  count:{
-    color:'green',
+  count: {
+    color: "white",
+    width: 20,
+    height:20,
+    textAlign:'center',
+    backgroundColor: "#f00",
+    marginLeft:5,
+    borderRadius:10
   },
   imgelement: {
     width: 160,
     height: 26,
-    resizeMode: 'contain'
+    resizeMode: "contain",
+  },
+  cartimg: {
+    width: 16,
+    height: 16,
+    resizeMode: "contain",
   },
 });

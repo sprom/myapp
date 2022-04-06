@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 const elementWidth = "100%";
 
 function Item({ idata, action }) {
-  const [added, setAdded] = useState(false);
   const dispatch = useDispatch();
   const HandlerAdd = () => {
     dispatch({
@@ -32,19 +31,16 @@ function Item({ idata, action }) {
         <View style={styles.price}>
           <Text>{idata.original_price} ლარი</Text>
           {action == "add" ? (
-            !added ? (
-              <Pressable style={styles.addcart} onPress={HandlerAdd}>
-                <Text style={styles.btntext}>კალათაში დამატება</Text>
-              </Pressable>
-            ) : (
-              <Pressable style={styles.addcart} onPress={HandlerAdd}>
-                <Text style={styles.btntext}> დამატებულია</Text>
-              </Pressable>
-            )
-          ) : (
-            <Pressable style={styles.remcart} onPress={HandlerDelete}>
-              <Text style={styles.btntext}>კალათიდან წაშლა</Text>
+            <Pressable style={({ pressed }) => [{ backgroundColor: pressed ? '#ddd' : 'white' }, styles.addcart ]} onPress={HandlerAdd}>
+              <Image
+                source={require("../resources/cart.png")}
+                style={styles.cartimg}
+              />
             </Pressable>
+          ) : (
+            <TouchableOpacity style={styles.remcart} onPress={HandlerDelete}>
+              <Text style={styles.btntext}>კალათიდან წაშლა</Text>
+            </TouchableOpacity>
           )}
         </View>
       </View>
@@ -56,7 +52,7 @@ const styles = StyleSheet.create({
   itemcard: {
     display: "flex",
     width: elementWidth,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "#fff",
     padding: 10,
     alignItems: "center",
     marginBottom: 20,
@@ -93,11 +89,14 @@ const styles = StyleSheet.create({
   addcart: {
     alignItems: "center",
     justifyContent: "center",
+    width: 50,
+    height: 50,
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 1,
-    backgroundColor: "green",
-    borderRadius: 4,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: "#dcdfe6",
     marginLeft: 10,
   },
   remcart: {
@@ -115,5 +114,10 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: "bold",
     color: "white",
+  },
+  cartimg: {
+    width: 16,
+    height: 16,
+    resizeMode: "contain",
   },
 });

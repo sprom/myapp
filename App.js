@@ -1,9 +1,7 @@
 import * as React from "react";
 import { StatusBar } from "expo-status-bar";
 import {
-  Button,
   StyleSheet,
-  View,
 } from "react-native";
 
 import { createStore } from "redux";
@@ -18,7 +16,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 export default function App() {
   const store = createStore(
     AllReducers,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
 
   const Stack = createStackNavigator();

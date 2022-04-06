@@ -1,10 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
   StyleSheet,
-  FlatList,
   ScrollView,
   Dimensions,
   ActivityIndicator,
@@ -27,7 +24,6 @@ function Listng() {
       seterror(e.message);
     }
   }
-
 
   useEffect(() => {
     fetchData();

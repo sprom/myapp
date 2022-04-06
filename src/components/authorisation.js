@@ -3,22 +3,18 @@ import { Text, StyleSheet, View, TextInput, Pressable, ActivityIndicator } from 
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
-
 function Authorisation() {
 
   const [userName, setUserName] = useState("");
   const [pasword, setPasword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  // const [load, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
-
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
     setDisabled(true);
     try {
       setErrorMessage('');
-      // setLoading(true);
       const response = await axios.post(
         "https://cms.vendoo.ge/api/customer/login",
         {
@@ -27,11 +23,9 @@ function Authorisation() {
         }
       );
       dispatch({ type: "SETAUTH", payload: true });
-      // setLoading(false);
       setDisabled(false);
     } catch (e) {
       setErrorMessage(e.response.data.message);
-      // setLoading(false);
       setDisabled(false);
     }
 
