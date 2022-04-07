@@ -15,7 +15,8 @@ function Listng() {
   const [load, setLoading] = useState(true);
 
   const ApiUrl = "https://cms.vendoo.ge/api/beta/catalog?url=saaxalwlo-nivtebi";
-  async function fetchData() {
+
+  const fetchData = async () => {
     try {
       const response = await axios.get(ApiUrl);
       setItems(response.data.products);
@@ -23,7 +24,7 @@ function Listng() {
     } catch (e) {
       seterror(e.message);
     }
-  }
+  };
 
   useEffect(() => {
     fetchData();
