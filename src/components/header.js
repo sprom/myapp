@@ -18,7 +18,7 @@ function Header() {
           style={styles.imgelement}
         />
         {auth && (
-          <TouchableOpacity  onPress={() => Navigation.navigate(Cart)} style={styles.carti}>
+          <TouchableOpacity  onPress={() => Navigation.navigate('Cart')} style={styles.carti}>
             <Image
               source={require("../resources/cart.png")}
               style={styles.cartimg}
